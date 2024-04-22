@@ -24,8 +24,8 @@ SocialSync is a web application that allows users to post to multiple social med
 
 To get started with SocialSync, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/socialsync.git`
-2. Install dependencies: `pip install -r requirements.txt`
+1. Clone the repository: `https://github.com/daviekaranja/sync.git`
+2. Install dependencies: `poetry install`
 3. Configure environment variables: Set up environment variables for API keys, database connection, etc.
 4. Run the application: `uvicorn main:app --reload`
 5. Access the application in your browser: `http://localhost:8000`

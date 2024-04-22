@@ -1,0 +1,1 @@
+uvicorn syncify.app.main:app --reload

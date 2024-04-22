@@ -1,2 +1,5 @@
 \tests
-\pycache
+\__pycache__
+\.idea
+.idea
+authjson.json

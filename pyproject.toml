@@ -7,6 +7,24 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+fastapi = {version="^0.110.0", extras=["all"]}
+sqlalchemy = "^2.0.27"
+setuptools = "^69.1.1"
+psycopg2 = "^2.9.9"
+pytz = "^2024.1"
+python-jose = "^3.3.0"
+passlib = "^1.7.4"
+tenacity = "^8.2.3"
+bcrypt = "^4.1.2"
+alembic = "^1.13.1"
+facebook-sdk = "^3.1.0"
+tweepy = {extras = ["async"], version = "^4.14.0"}
+authlib = "^1.3.0"
+
+[tool.poetry.scripts]
+
+[tool.poetry.dev-dependencies]
+fastapi-offline = "^1.7.1"
 
 
 [build-system]

@@ -82,6 +82,9 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     def remove(self, db: Session, *, id: int) -> ModelType:
         try:
             obj = db.query(self.model).get(id)
+            if obj is None:
+                db.rollback()
+                raise HTTPException(status_code=404, detail='not found')
             db.delete(obj)
             db.commit()
             return obj

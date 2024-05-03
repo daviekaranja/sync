@@ -12,7 +12,7 @@ from ..core.security import get_password_hash, verify_password
 
 
 class CrudUser(CRUDBase[User, UserCreate, UserUpdate]):
-    def get_by_email(self, db: Session, email: EmailStr) -> Type[User]:
+    def get_by_email(self, db: Session, email: EmailStr) -> Type[UserInDb]:
         try:
             user_by_email = db.query(self.model).filter(self.model.email == email).one()
             if user_by_email is None:
@@ -26,7 +26,7 @@ class CrudUser(CRUDBase[User, UserCreate, UserUpdate]):
             db_obj = User(
                 email=obj_in.email,
                 hashed_password=get_password_hash(obj_in.password),
-                full_name=obj_in.full_name
+                fullname=obj_in.fullname
             )
             if admin_mode:
                 db_obj.is_superuser = True
@@ -61,7 +61,7 @@ class CrudUser(CRUDBase[User, UserCreate, UserUpdate]):
         except Exception as error:
             raise HTTPException(status_code=500, detail='An error occurred when creating user')
 
-    def authenticate(self, db: Session, *, email: str, password: str) -> Optional[User]:
+    def authenticate(self, db: Session, *, email: str, password: str) -> Type[User] | None:
         try:
             user = self.get_by_email(db, email=email)
             if not user:

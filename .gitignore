@@ -2,4 +2,5 @@
 \__pycache__
 \.idea
 .idea
-authjson.json
+googlecreds.json
+creads.env

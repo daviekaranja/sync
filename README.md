@@ -14,11 +14,11 @@ SocialSync is a web application that allows users to post to multiple social med
 ## Technologies Used
 
 - **Backend:** Python FastAPI for building the backend REST API.
-- **Database:** (Specify database technology here, e.g., PostgreSQL, MySQL)
-- **Frontend:** (If applicable, specify frontend technology here, e.g., React, Vue.js)
+- **Database:** PostgreSQL
+- **Frontend:** React
 - **Social Media APIs:** Integration with Facebook Graph API, Instagram Basic Display API, Twitter API, YouTube Data API, WhatsApp Business API, and TikTok API.
 - **Authentication:** OAuth2 authentication flow for user authentication and authorization.
-- **Deployment:** (Specify deployment platform here, e.g., Heroku, AWS)
+- **Deployment:** Heroku, AWS
 
 ## Getting Started
 

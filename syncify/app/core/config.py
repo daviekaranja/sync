@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: int = 1256
     POSTGRES_DATABASE_NAME: str = 'sync'
 
-    ACCESS_TOKEN_MINUTES: int = 1400
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1400
     SECRET_KEY: str = 'cnmxcgxnzcbxzzxsgdsfjshdcjdfnvdfkvbzxd.kgui'
 
     sqlalchemy_url: str = 'postgresql://postgres:1256@localhost/sync'

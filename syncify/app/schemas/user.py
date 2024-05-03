@@ -4,11 +4,10 @@ from pydantic import BaseModel, EmailStr
 
 
 class UserCreate(BaseModel):
-    id: int
+    # id: int
     fullname: str
     email: EmailStr
-    hashed_password: str
-    created_at: datetime.datetime
+    password: str
 
 
 class UserUpdate(BaseModel):
@@ -21,3 +20,10 @@ class UserInDb(BaseModel):
     fullname: str
     email: EmailStr
     created_at: datetime.datetime
+
+
+class SessionUser(BaseModel):
+    id: int
+    fullname: str
+    is_active: bool
+    is_superuser: bool

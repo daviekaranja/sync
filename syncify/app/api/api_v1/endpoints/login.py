@@ -1,17 +1,17 @@
 from datetime import timedelta
-
 from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.openapi.models import Response
-from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.encoders import jsonable_encoder
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from pydantic import EmailStr
+import secrets
+from starlette.requests import Request as Req
 
-from syncify.app.api.dependancies import get_db, get_user
+from syncify.app.api.dependancies import get_db
+from syncify.app.intergrations.google import oauth, OAuthError
 from syncify.app.core import security
 from syncify.app.core.config import settings
 from syncify.app.crud import crudUser
-from syncify.app.schemas.user import UserInDb, SessionUser
+from syncify.app.schemas.user import SessionUser
 from syncify.app.scripts.system_logger import logger
 
 router = APIRouter()
@@ -37,5 +37,27 @@ def login_access_token(request: Request, db: Session = Depends(get_db),
 
 @router.get('/logout', status_code=200)
 def logout(request: Request):
-    request.session.pop('user')
+    request.session.get('user')
     return 'logged out'
+
+
+@router.get('/login/google', status_code=200)
+async def google_login(request: Req):
+    try:
+        state = settings.google_state
+        request.session['state'] = state
+        redirect_uri = request.url_for('callback')
+        return await oauth.google.authorize_redirect(request, redirect_uri, state=request.session['state'])
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=e)
+
+
+@router.get('/google/callback', status_code=200)
+async def callback(request: Req):
+    try:
+        token = await oauth.google.authorize_access_token(request)
+        userdata = token.get('userinfo')
+        return userdata
+    except OAuthError as e:
+        raise HTTPException(status_code=401, detail=e.error)
+

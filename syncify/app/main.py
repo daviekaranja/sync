@@ -1,3 +1,4 @@
+from fastapi import FastAPI
 from fastapi_offline import FastAPIOffline
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.responses import HTMLResponse
@@ -11,7 +12,7 @@ from syncify.app.scripts.system_logger import logger
 from syncify.app.core.middlewares import RequestLoggerMiddleware
 
 Base.metadata.create_all(bind=engine)  # creates all tables
-app = FastAPIOffline()
+app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key=settings.SECRET_KEY)
 
 # routers

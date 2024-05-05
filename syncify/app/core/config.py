@@ -20,4 +20,4 @@ class Settings(BaseSettings):
         return time
 
 
-settings = Settings(_env_file='./.env')
+settings = Settings(_env_file='syncify/.env')

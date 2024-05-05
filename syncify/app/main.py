@@ -22,6 +22,7 @@ app.include_router(api.api_router, prefix='/api')
 async def on_startup():
     backend_prestart.main()
 
+
 @app.get('/', status_code=200)
 def home():
     html_response = """
@@ -73,5 +74,3 @@ def home():
 
     """
     return HTMLResponse(html_response)
-
-

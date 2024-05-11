@@ -13,5 +13,5 @@ oauth.register(
     access_token_params=None,
     refresh_token_url=None,
     refresh_token_params=None,
-    client_kwargs={'scope': 'email'},
+    client_kwargs={'scope': 'user_friends'},
 )

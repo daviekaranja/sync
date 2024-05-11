@@ -11,6 +11,7 @@ from syncify.app.scripts import backend_prestart
 from syncify.app.api import dependancies
 from .core.config import settings
 from syncify.app.scripts.system_logger import logger
+from .core.middlewares import check_authentication
 from syncify.app.core.middlewares import RequestLoggerMiddleware
 
 env = Environment(loader=FileSystemLoader(searchpath=settings.staticfiles))
@@ -33,11 +34,11 @@ async def health():
 
 
 @app.get('/', status_code=200)
-def home(current_user=Depends(dependancies.get_user)):
+def home():
     template = env.get_template('home.html')
     context = {
         'title': "SocialSync",
-        'name': current_user.fullname
+        'name': 'User'
     }
     output = template.render(context)
     return HTMLResponse(output)

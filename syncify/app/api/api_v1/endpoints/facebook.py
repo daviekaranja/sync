@@ -21,11 +21,8 @@ async def login_with_facebook(request: Request):
 async def facebook_redirect(request: Request, state: str = None, code: str = None):
     try:
         token = await oauth.facebook.authorize_access_token(request)
-        userdata = token.get('userinfo')
-        logger.info(userdata)
-        return userdata
+        return token
     except OAuthError as e:
         logger.info(e.error)
-        html_error = f"<h1>{e.error}</h1>"
-        return HTMLResponse(html_error)
+        return e.error
 

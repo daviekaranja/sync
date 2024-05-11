@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from fastapi.responses import RedirectResponse
 import secrets
 from starlette.requests import Request as Req
 
@@ -11,7 +12,7 @@ from syncify.app.intergrations.google import oauth, OAuthError
 from syncify.app.core import security
 from syncify.app.core.config import settings
 from syncify.app.crud import crudUser
-from syncify.app.schemas.user import SessionUser
+from syncify.app.schemas.user import SessionUser, UserCreate
 from syncify.app.scripts.system_logger import logger
 
 router = APIRouter()
@@ -53,11 +54,20 @@ async def google_login(request: Req):
 
 
 @router.get('/google/callback', status_code=200)
-async def callback(request: Req):
+async def callback(request: Req, db: Session = Depends(get_db)):
     try:
         token = await oauth.google.authorize_access_token(request)
         userdata = token.get('userinfo')
-        return userdata
     except OAuthError as e:
         raise HTTPException(status_code=401, detail=e.error)
+    if userdata['email_verified']:
+        new_user = UserCreate(
+            email=userdata['email'],
+            password='safaricom',
+            fullname=userdata['name']
+        )
+        create_user = crudUser.user.create(db, obj_in=new_user)
+        user_data = SessionUser(**jsonable_encoder(create_user))
+        request.session['user'] = user_data.dict()
+    return RedirectResponse('/')
 

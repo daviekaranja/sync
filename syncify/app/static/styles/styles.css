@@ -1,0 +1,25 @@
+:root {
+    --slatewhite: #eff3fc;
+    --darktext: #010101;
+    --purple: #6d2480;
+    --pink: #da84b1;
+    --blue: #0c58c6;
+    --lighterblue: #6a93d9;
+    --orange: #fc5110;
+}
+
+body{
+    background-color: white;
+}
+
+.container{
+    width: 400px;
+    margin: 0 auto;
+    background-color: var(--slatewhite);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container span{
+    color: var(--purple);
+}

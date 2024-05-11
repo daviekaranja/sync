@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     google_state: str
     client_id: str
     client_secret: str
+    staticfiles: str  # 'syncify/app/static/src'
+    facebook_secret: str
+    facebook_id: int
 
     sqlalchemy_url: str
 

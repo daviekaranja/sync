@@ -25,6 +25,7 @@ app.include_router(api.api_router, prefix='/api')
 
 @app.on_event('startup')
 async def on_startup():
+    logger.info('Starting Application')
     backend_prestart.main()
 
 

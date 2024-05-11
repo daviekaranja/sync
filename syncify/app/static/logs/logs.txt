@@ -1,0 +1,3 @@
+2024-05-11 18:25:06,142 - INFO - Starting Application
+2024-05-11 18:26:09,980 - INFO - Starting Application
+2024-05-11 18:26:09,995 - INFO - http://127.0.0.1:8000/api/facebook/auth-redirect

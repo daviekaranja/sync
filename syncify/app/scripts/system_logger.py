@@ -1,5 +1,6 @@
 import logging
 from fastapi.logger import logger as fastapi_logger
+from syncify.app.core.config import settings
 
 
 class CustomLogger:
@@ -36,4 +37,4 @@ class CustomLogger:
         self.logger.critical(message)
 
 
-logger = CustomLogger('app.log')
+logger = CustomLogger(log_file=settings.logs_file)

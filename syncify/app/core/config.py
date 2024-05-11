@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     staticfiles: str  # 'syncify/app/static/src'
     facebook_secret: str
     facebook_id: int
+    logs_file: str
 
     sqlalchemy_url: str
 

@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Request, HTTPException
+from fastapi.responses import HTMLResponse
 
 from syncify.app.core.config import settings
-from syncify.app.intergrations.facebook import oauth
+from syncify.app.intergrations.facebook import oauth, OAuthError
 
 router = APIRouter()
 
@@ -16,7 +17,11 @@ async def login_with_facebook(request: Request):
 
 @router.get('/auth-redirect', status_code=200)
 async def facebook_redirect(request: Request, state: str = None, code: str = None):
-    token = await oauth.facebook.authorize_access_token(request)
-    if token:
+    try:
+        token = await oauth.facebook.authorize_access_token(request)
         userdata = token.get('userinfo')
-    return userdata
+        return userdata
+    except OAuthError as e:
+        html_error = f"<h1>{e.error}</h1>"
+        return HTMLResponse(html_error)
+

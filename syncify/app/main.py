@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request, Depends
 from fastapi_offline import FastAPIOffline
 from starlette.middleware.sessions import SessionMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from jinja2 import Environment, FileSystemLoader
 
 from syncify.app.api.api_v1 import api
@@ -27,6 +27,11 @@ async def on_startup():
     backend_prestart.main()
 
 
+@app.get('/check', status_code=200)
+async def health():
+    return 'Welcome'
+
+
 @app.get('/', status_code=200)
 def home(current_user=Depends(dependancies.get_user)):
     template = env.get_template('home.html')
@@ -36,6 +41,7 @@ def home(current_user=Depends(dependancies.get_user)):
     }
     output = template.render(context)
     return HTMLResponse(output)
+
 
 @app.get('/docs', status_code=200)
 def documentation(request: Request):
